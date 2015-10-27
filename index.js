@@ -7,6 +7,19 @@ levels.forEach(function (level) {
     tilesForLevel[level.number] = level.floor && level.floor.tiles;
 });
 
+function splitStrings(arr) {
+    var strings = [],
+        zeroPos;
+
+    while (arr.length) {
+        zeroPos = arr.indexOf(0);
+        strings.push(arr.slice(0, zeroPos));
+        arr = arr.slice(zeroPos + 1);
+    }
+
+    return strings;
+}
+
 var generators = {
     /*** Mail Room ***/
     '1': function (inbox) {
@@ -230,7 +243,16 @@ var generators = {
         return outbox;
     },
     /*** Sorting Floor ***/
-    '41': undefined
+    '41': function (inbox) {
+        // Split strings, sort items in each string, then output all strings
+        return splitStrings(inbox)
+            .map(function (string) {
+                return string.sort();
+            })
+            .reduce(function (output, string) {
+                return output.concat(string);
+            });
+    }
 };
 
 exports.generate = function (levelNumber, inbox) {
