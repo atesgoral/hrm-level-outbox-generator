@@ -181,7 +181,16 @@ var generators = {
         return outbox;
     },
     /*** Three Sort ***/
-    '28': undefined,
+    '28': function (inbox) {
+        // For each pair, output the modulus
+        var outbox = [];
+
+        for (var i = 0; i < inbox.length; i += 3) {
+            Array.prototype.push.apply(outbox, inbox.slice(i, i + 3).sort());
+        }
+
+        return outbox;
+    },
     /*** Storage Floor ***/
     '29': function (inbox) {
         var tiles = tilesForLevel[29];
