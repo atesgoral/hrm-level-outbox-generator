@@ -1,27 +1,23 @@
-[![Build Status](https://travis-ci.org/atesgoral/hrm-level-io-generator.svg?branch=master)](https://travis-ci.org/atesgoral/hrm-level-io-generator)
+[![Build Status](https://travis-ci.org/atesgoral/hrm-level-outbox-generator.svg?branch=master)](https://travis-ci.org/atesgoral/hrm-level-outbox-generator)
 
-# hrm-level-io-generator
-Human Resource Machine inbox/outbox data generator for testing and benchmarking solutions
+# hrm-level-outbox-generator
+Human Resource Machine inbox generator for testing and benchmarking solutions.
 
-Generates a random inbox that is appropriate for a given level and computes the output that is expected.
+Generates the outbox that is expected for a given level and inbox.
 
 ## generate(levelNumber, [ inbox ])
 
 **levelNumber** - _Number_. The level number (1-41).
 
-**inbox** - _Array_. _Optional_. If omitted, a random inbox will be generated. You can pass in your own custom inbox and let the generator just compute the output.
+**inbox** - _Array_. The inbox contents. Must be suitable for the level. You can use (hrm-level-inbox-generator)[https://github.com/atesgoral/hrm-level-inbox-generator], grab examples from (hrm-level-data)[https://github.com/atesgoral/hrm-level-data] or simply craft your own input.
 
-**returns** - _Object_. The object has `inbox` and `object` arrays as properties.
-
-If the generator doesn't support the given level, a `null` is returned.
+**returns** - _Array_. If the generator doesn't support the given level, a `null` is returned.
 
 ## Example
 
 ```js
-var generator = require('hrm-level-io-generator');
+var generator = require('hrm-level-outbox-generator');
 
-var expectation = generator.generate(8); // Tripler Room
-
-expectation.inbox // [ 2, 4, 0, -5 ]
-expectation.outbox // [ 6, 12, 0, -15 ]
+// Tripler Room
+var outbox = generator.generate(8, [ 2, 4, 0, -5 ]); // [ 6, 12, 0, -15 ]
 ```
