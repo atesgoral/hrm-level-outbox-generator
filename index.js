@@ -20,6 +20,17 @@ function splitStrings(arr) {
     return strings;
 }
 
+function splitGroups(arr, groupSize) {
+    var strings = [],
+        zeroPos;
+
+    for (var i = 0; i < arr.length; i += groupSize) {
+        strings.push(arr.slice(i, i + groupSize));
+    }
+
+    return strings;
+}
+
 var generators = {
     /*** Mail Room ***/
     '1': function (inbox) {
@@ -39,30 +50,22 @@ var generators = {
     /*** Scrambler Handler ***/
     '4': function (inbox) {
         // Output each pair with the items sorted in reverse order
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            Array.prototype.push.apply(outbox, [ inbox[i], inbox[i + 1] ].sort(function (a, b) {
+        return splitGroups(inbox, 2).reduce(function (outbox, pair) {
+            return outbox.concat(pair.sort(function (a, b) {
                 return a === b
                     ? 0
                     : a < b
                         ? 1
                         : -1;
             }));
-        }
-
-        return outbox;
+        }, []);
     },
     /*** Rainy Summer ***/
     '6': function (inbox) {
         // Output the sum of each pair
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            outbox.push(inbox[i] + inbox[i + 1]);
-        }
-
-        return outbox;
+        return splitGroups(inbox, 2).map(function (pair) {
+            return pair[0] + pair[1];
+        });
     },
     /*** Zero Exterminator ***/
     '7': function (inbox) {
@@ -95,13 +98,15 @@ var generators = {
     /*** Sub Hallway ***/
     '11': function (inbox) {
         // Output difference of each pair, both ways
-        var outbox = [];
+        return splitGroups(inbox, 2)
+            .map(function (pair) {
+                var diff = pair[1] - pair[0];
 
-        for (var i = 0; i < inbox.length; i += 2) {
-            outbox.push(inbox[i + 1] - inbox[i], inbox[i] - inbox[i + 1]);
-        }
-
-        return outbox;
+                return [ diff, -diff ];
+            })
+            .reduce(function (outbox, diffs) {
+                return outbox.concat(diffs);
+            });
     },
     /*** Tetracontiplier ***/
     '12': function (inbox) {
@@ -113,26 +118,20 @@ var generators = {
     /*** Equalization Room ***/
     '13': function (inbox) {
         // Output one of equal pairs
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            if (inbox[i] === inbox[i + 1]) {
-                outbox.push(inbox[i]);
-            }
-        }
-
-        return outbox;
+        return splitGroups(inbox, 2)
+            .filter(function (pair) {
+                return pair[0] === pair[1];
+            })
+            .map(function (pair) {
+                return pair[0];
+            });
     },
     /*** Maximization Room ***/
     '14': function (inbox) {
         // Output the maximum of each pair
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            outbox.push(Math.max(inbox[i], inbox[i + 1]));
-        }
-
-        return outbox;
+        return splitGroups(inbox, 2).map(function (pair) {
+            return Math.max.apply(null, pair);
+        });
     },
     /*** Absolute Positivity ***/
     '16': function (inbox) {
@@ -142,13 +141,9 @@ var generators = {
     /*** Exclusive Lounge ***/
     '17': function (inbox) {
         // For each pair, output 1 if the signs are the same, 0 if different
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            outbox.push(inbox[i] * inbox[i + 1] < 0 ? 1 : 0);
-        }
-
-        return outbox;
+        return splitGroups(inbox, 2).map(function (pair) {
+            return pair[0] * pair[1] < 0 ? 1 : 0;
+        });
     },
     /*** Countdown ***/
     '19': function (inbox) {
@@ -169,13 +164,9 @@ var generators = {
     /*** Multiplication Workshop ***/
     '20': function (inbox) {
         // For each pair, output their product
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            outbox.push(inbox[i] * inbox[i + 1]);
-        }
-
-        return outbox;
+        return splitGroups(inbox, 2).map(function (pair) {
+            return pair[0] * pair[1];
+        });
     },
     /*** Zero Terminated Sum ***/
     '21': function (inbox) {
@@ -205,44 +196,32 @@ var generators = {
     },
     /*** The Littlest Number ***/
     '23': function (inbox) {
-        return splitStrings(inbox).reduce(function (outbox, string) {
-            return outbox.concat(Math.min.apply(null, string));
-        }, []);
+        return splitStrings(inbox).map(function (string) {
+            return Math.min.apply(null, string);
+        });
     },
     /*** Mod Module ***/
     '24': function (inbox) {
         // For each pair, output the modulus
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            outbox.push(inbox[i] % inbox[i + 1]);
-        }
-
-        return outbox;
+        return splitGroups(inbox, 2).map(function (pair) {
+            return pair[0] % pair[1];
+        });
     },
     /*** Cumulative Countdown ***/
     '25': undefined,
     /*** Small Divide ***/
     '26': function (inbox) {
         // For each pair, output the quotient
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 2) {
-            outbox.push(Math.floor(inbox[i] / inbox[i + 1]));
-        }
-
-        return outbox;
+        return splitGroups(inbox, 2).map(function (pair) {
+            return Math.floor(pair[0] / pair[1]);
+        });
     },
     /*** Three Sort ***/
     '28': function (inbox) {
-        // For each pair, output the modulus
-        var outbox = [];
-
-        for (var i = 0; i < inbox.length; i += 3) {
-            Array.prototype.push.apply(outbox, inbox.slice(i, i + 3).sort());
-        }
-
-        return outbox;
+        // For each triple, sort then output
+        return splitGroups(inbox, 3).reduce(function (outbox, triplet) {
+            return outbox.concat(triplet.sort());
+        }, []);
     },
     /*** Storage Floor ***/
     '29': function (inbox) {
@@ -274,13 +253,9 @@ var generators = {
     /*** Prime Factory ***/
     '40': function (inbox) {
         // Output prime factors smallest to largest of each number
-        var outbox = [];
-
-        inbox.forEach(function (item) {
-            Array.prototype.push.apply(outbox, pf(item));
-        });
-
-        return outbox;
+        return inbox.reduce(function (outbox, item) {
+            return outbox.concat(pf(item));
+        }, []);
     },
     /*** Sorting Floor ***/
     '41': function (inbox) {
