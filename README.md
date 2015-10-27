@@ -5,7 +5,9 @@ Human Resource Machine inbox generator for testing and benchmarking solutions.
 
 Generates the outbox that is expected for a given level and inbox.
 
-## generate(levelNumber, [ inbox ])
+## Methods
+
+### .generate(levelNumber, inbox)
 
 **levelNumber** - _Number_. The level number (1-41).
 
