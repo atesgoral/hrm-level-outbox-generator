@@ -24,7 +24,22 @@ var generators = {
         return [ "B", "U", "G" ];
     },
     /*** Scrambler Handler ***/
-    '4': undefined,
+    '4': function (inbox) {
+        // Output each pair with the items sorted in reverse order
+        var outbox = [];
+
+        for (var i = 0; i < inbox.length; i += 2) {
+            Array.prototype.push.apply(outbox, [ inbox[i], inbox[i + 1] ].sort(function (a, b) {
+                return a === b
+                    ? 0
+                    : a < b
+                        ? 1
+                        : -1;
+            }));
+        }
+
+        return outbox;
+    },
     /*** Rainy Summer ***/
     '6': function (inbox) {
         // Output the sum of each pair
