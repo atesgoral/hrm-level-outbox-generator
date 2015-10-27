@@ -11,7 +11,7 @@ Generates the outbox that is expected for a given level and inbox.
 
 **levelNumber** - _Number_. The level number (1-41).
 
-**inbox** - _Array_. The inbox contents. Must be suitable for the level. You can use (hrm-level-inbox-generator)[https://github.com/atesgoral/hrm-level-inbox-generator], grab examples from (hrm-level-data)[https://github.com/atesgoral/hrm-level-data] or simply craft your own input.
+**inbox** - _Array_. The inbox contents. Must be suitable for the level. You can use [hrm-level-inbox-generator](https://github.com/atesgoral/hrm-level-inbox-generator), grab examples from [hrm-level-data](https://github.com/atesgoral/hrm-level-data) or simply craft your own input.
 
 **returns** - _Array_. If the generator doesn't support the given level, a `null` is returned.
 
