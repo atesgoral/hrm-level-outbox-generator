@@ -98,7 +98,18 @@ var generators = {
         });
     },
     /*** Equalization Room ***/
-    '13': undefined,
+    '13': function (inbox) {
+        // Output one of equal pairs
+        var outbox = [];
+
+        for (var i = 0; i < inbox.length; i += 2) {
+            if (inbox[i] === inbox[i + 1]) {
+                outbox.push(inbox[i]);
+            }
+        }
+
+        return outbox;
+    },
     /*** Maximization Room ***/
     '14': function (inbox) {
         // Output the maximum of each pair
