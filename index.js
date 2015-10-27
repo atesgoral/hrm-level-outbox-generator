@@ -208,7 +208,12 @@ var generators = {
         });
     },
     /*** Cumulative Countdown ***/
-    '25': undefined,
+    '25': function (inbox) {
+        // Sum of all numbers up to and including item
+        return inbox.map(function (item) {
+            return item * (item + 1) / 2;
+        });
+    },
     /*** Small Divide ***/
     '26': function (inbox) {
         // For each pair, output the quotient
@@ -235,7 +240,12 @@ var generators = {
     /*** String Storage Floor ***/
     '30': undefined,
     /*** String Reverse ***/
-    '31': undefined,
+    '31': function (inbox) {
+        // Reverse strings and output
+        return splitStrings(inbox).reduce(function (outbox, string) {
+            return outbox.concat(string.reverse());
+        }, []);
+    },
     /*** Inventory Report ***/
     '32': undefined,
     /*** Vowel Incinerator ***/
