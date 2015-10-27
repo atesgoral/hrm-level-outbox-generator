@@ -122,9 +122,21 @@ var generators = {
         return outbox;
     },
     /*** Absolute Positivity ***/
-    '16': undefined,
+    '16': function (inbox) {
+        // Output absolute values
+        return inbox.map(Math.abs);
+    },
     /*** Exclusive Lounge ***/
-    '17': undefined,
+    '17': function (inbox) {
+        // For each pair, output 1 if the signs are the same, 0 if different
+        var outbox = [];
+
+        for (var i = 0; i < inbox.length; i += 2) {
+            outbox.push(inbox[i] * inbox[i + 1] < 0 ? 1 : 0);
+        }
+
+        return outbox;
+    },
     /*** Countdown ***/
     '19': undefined,
     /*** Multiplication Workshop ***/
