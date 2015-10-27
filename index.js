@@ -140,7 +140,16 @@ var generators = {
     /*** Countdown ***/
     '19': undefined,
     /*** Multiplication Workshop ***/
-    '20': undefined,
+    '20': function (inbox) {
+        // For each pair, output their product
+        var outbox = [];
+
+        for (var i = 0; i < inbox.length; i += 2) {
+            outbox.push(inbox[i] * inbox[i + 1]);
+        }
+
+        return outbox;
+    },
     /*** Zero Terminated Sum ***/
     '21': undefined,
     /*** Fibonacci Visitor ***/
@@ -148,11 +157,29 @@ var generators = {
     /*** The Littlest Number ***/
     '23': undefined,
     /*** Mod Module ***/
-    '24': undefined,
+    '24': function (inbox) {
+        // For each pair, output the modulus
+        var outbox = [];
+
+        for (var i = 0; i < inbox.length; i += 2) {
+            outbox.push(inbox[i] % inbox[i + 1]);
+        }
+
+        return outbox;
+    },
     /*** Cumulative Countdown ***/
     '25': undefined,
     /*** Small Divide ***/
-    '26': undefined,
+    '26': function (inbox) {
+        // For each pair, output the quotient
+        var outbox = [];
+
+        for (var i = 0; i < inbox.length; i += 2) {
+            outbox.push(Math.floor(inbox[i] / inbox[i + 1]));
+        }
+
+        return outbox;
+    },
     /*** Three Sort ***/
     '28': undefined,
     /*** Storage Floor ***/
