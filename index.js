@@ -187,9 +187,28 @@ var generators = {
             });
     },
     /*** Fibonacci Visitor ***/
-    '22': undefined,
+    '22': function (inbox) {
+        return inbox.reduce(function (outbox, item) {
+            var i = 1,
+                j = 1,
+                tmp;
+
+            do {
+                outbox.push(i);
+                tmp = j;
+                j += i;
+                i = tmp;
+            } while (i <= item);
+
+            return outbox;
+        }, []);
+    },
     /*** The Littlest Number ***/
-    '23': undefined,
+    '23': function (inbox) {
+        return splitStrings(inbox).reduce(function (outbox, string) {
+            return outbox.concat(Math.min.apply(null, string));
+        }, []);
+    },
     /*** Mod Module ***/
     '24': function (inbox) {
         // For each pair, output the modulus
