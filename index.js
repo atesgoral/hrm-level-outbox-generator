@@ -151,7 +151,21 @@ var generators = {
         return outbox;
     },
     /*** Countdown ***/
-    '19': undefined,
+    '19': function (inbox) {
+        return inbox.reduce(function (outbox, item) {
+            if (item >= 0) {
+                for (var i = item; i >= 0; i--) {
+                    outbox.push(i);
+                }
+            } else {
+                for (var i = item; i <= 0; i++) {
+                    outbox.push(i);
+                }
+            }
+
+            return outbox;
+        }, []);
+    },
     /*** Multiplication Workshop ***/
     '20': function (inbox) {
         // For each pair, output their product
@@ -164,7 +178,14 @@ var generators = {
         return outbox;
     },
     /*** Zero Terminated Sum ***/
-    '21': undefined,
+    '21': function (inbox) {
+        return splitStrings(inbox)
+            .map(function (string) {
+                return string.reduce(function (sum, item) {
+                    return sum + item;
+                }, 0);
+            });
+    },
     /*** Fibonacci Visitor ***/
     '22': undefined,
     /*** The Littlest Number ***/
