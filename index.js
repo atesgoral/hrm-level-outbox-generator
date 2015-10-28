@@ -229,9 +229,7 @@ var generators = {
         }, []);
     },
     /*** Storage Floor ***/
-    '29': function (inbox) {
-        var tiles = tilesForLevel[29];
-
+    '29': function (inbox, tiles) {
         // Lookup floor tiles
         return inbox.map(function (item) {
             return tiles[item];
@@ -247,19 +245,70 @@ var generators = {
         }, []);
     },
     /*** Inventory Report ***/
-    '32': undefined,
+    '32': function (inbox, tiles) {
+        // Count occurence of item in tiles
+        return inbox.map(function (item) {
+            return tiles.filter(function (tile) {
+                return tile === item;
+            }).length;
+        });
+    },
     /*** Vowel Incinerator ***/
-    '34': undefined,
+    '34': function (inbox, tiles) {
+        // Drop the vowels
+        return inbox.filter(function (item) {
+            return tiles.indexOf(item) === -1;
+        });
+    },
     /*** Duplicate Removal ***/
-    '35': undefined,
+    '35': function (inbox) {
+        var seen = {};
+
+        // Drop duplicates
+        return inbox.filter(function (item) {
+            if (seen[item]) {
+                return false;
+            } else {
+                seen[item] = true;
+                return true;
+            }
+        });
+    },
     /*** Alphabetizer ***/
-    '36': undefined,
+    '36': undefined && function (inbox) {
+        // Output the smaller of two strings
+        return splitStrings(inbox).slice(0, 2).reduce(function (first, second) {
+            return first.some(function (item, idx) {
+                return idx === second.length || item > second[idx];
+            }) ? second : first;
+        });
+    },
     /*** Scavenger Chain ***/
-    '37': undefined,
+    '37': function (inbox, tiles) {
+        // Follow address chains and output letters
+        return inbox.reduce(function (outbox, item) {
+            while (item !== -1) {
+                outbox.push(tiles[item]);
+                item = tiles[item + 1];
+            }
+
+            return outbox;
+        }, []);
+    },
     /*** Digit Exploder ***/
-    '38': undefined,
+    '38': function (inbox) {
+        // Output digits of each number
+        return inbox.reduce(function (outbox, item) {
+            return outbox.concat(item.toString().split(''));
+        }, []);
+    },
     /*** Re-Coordinator ***/
-    '39': undefined,
+    '39': function (inbox) {
+        // Output coordinates of each tile
+        return inbox.reduce(function (outbox, item) {
+            return outbox.concat(item % 4, Math.floor(item / 4));
+        }, []);
+    },
     /*** Prime Factory ***/
     '40': function (inbox) {
         // Output prime factors smallest to largest of each number
@@ -287,5 +336,5 @@ exports.generate = function (levelNumber, inbox) {
         return null;
     }
 
-    return generator(inbox);
+    return generator(inbox, tilesForLevel[levelNumber]);
 };
