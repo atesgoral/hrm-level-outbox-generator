@@ -275,12 +275,21 @@ var generators = {
         });
     },
     /*** Alphabetizer ***/
-    '36': undefined && function (inbox) {
+    '36': function (inbox) {
         // Output the smaller of two strings
         return splitStrings(inbox).slice(0, 2).reduce(function (first, second) {
-            return first.some(function (item, idx) {
-                return idx === second.length || item > second[idx];
-            }) ? second : first;
+            var firstSmallerOrEqual = true;
+
+            first.some(function (item, idx) {
+                if (idx === second.length || item > second[idx]) {
+                    firstSmallerOrEqual = false;
+                    return true;
+                } else if (item < second[idx]) {
+                    return true;
+                }
+            });
+
+            return firstSmallerOrEqual ? first : second;
         });
     },
     /*** Scavenger Chain ***/
