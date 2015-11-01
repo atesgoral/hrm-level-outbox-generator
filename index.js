@@ -244,7 +244,16 @@ var generators = {
         });
     },
     /*** String Storage Floor ***/
-    '30': undefined,
+    '30': function (inbox, tiles) {
+        // Output strings from the floor
+        return inbox.reduce(function (outbox, item) {
+            do {
+                outbox.push(tiles[item]);
+            } while (tiles[++item]);
+
+            return outbox;
+        }, []);
+    },
     /*** String Reverse ***/
     '31': function (inbox) {
         // Reverse strings and output
