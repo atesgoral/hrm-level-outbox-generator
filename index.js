@@ -60,6 +60,8 @@ var generators = {
             }));
         }, []);
     },
+    /*** Coffee Time ***/
+    '5': null,
     /*** Rainy Summer ***/
     '6': function (inbox) {
         // Output the sum of each pair
@@ -133,6 +135,8 @@ var generators = {
             return Math.max.apply(null, pair);
         });
     },
+    /*** Employee Morale Insertion ***/
+    '15': null,
     /*** Absolute Positivity ***/
     '16': function (inbox) {
         // Output absolute values
@@ -145,6 +149,8 @@ var generators = {
             return pair[0] * pair[1] < 0 ? 1 : 0;
         });
     },
+    /*** Sabbatical Beach Paradise ***/
+    '18': null,
     /*** Countdown ***/
     '19': function (inbox) {
         return inbox.reduce(function (outbox, item) {
@@ -221,6 +227,8 @@ var generators = {
             return Math.floor(pair[0] / pair[1]);
         });
     },
+    /*** Midnight Petroleum ***/
+    '27': null,
     /*** Three Sort ***/
     '28': function (inbox) {
         // For each triple, sort then output
@@ -253,6 +261,8 @@ var generators = {
             }).length;
         });
     },
+    /*** Where's Carol? ***/
+    '33': null,
     /*** Vowel Incinerator ***/
     '34': function (inbox, tiles) {
         // Drop the vowels
@@ -335,7 +345,9 @@ var generators = {
             .reduce(function (output, string) {
                 return output.concat(string);
             });
-    }
+    },
+    /*** End Program. Congratulations. ***/
+    '42': null
 };
 
 exports.generate = function (levelNumber, inbox) {
