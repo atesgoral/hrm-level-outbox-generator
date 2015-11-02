@@ -3,11 +3,12 @@ var generator = require('../index.js'),
 
 levels.forEach(function (level) {
     exports['test' + level.number] = function (test) {
-        var outbox = generator.generate(level.number, level.expect[0].inbox);
+        if (!level.cutscene) {
+            var outbox = generator.generate(level.number, level.examples[0].inbox);
 
-        if (outbox) { // @todo Temporary, until all generators are ready
-            test.deepEqual(outbox, level.expect[0].outbox);
+            test.deepEqual(outbox, level.examples[0].outbox);
         }
+
         test.done();
     };
 });
