@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Human Resource Machine outbox generator for testing and benchmarking solutions",
   "main": "index.js",
+  "files": [ "index.js" ],
   "scripts": {
     "test": "nodeunit"
   },
