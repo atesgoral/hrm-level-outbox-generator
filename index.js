@@ -345,9 +345,15 @@ var generators = {
         // Split strings, sort items in each string, then output all strings
         return splitStrings(inbox)
             .map(function (string) {
-                return ( Number.isInteger(string[0]) ?
-                            string.sort(function(a,b){ return a - b; }) :
-                            string.sort() );
+                // This assumes that the string is uniform in the type of its
+                // elements. Which should be true in any case
+                return string.sort(function (a, b) {
+                  if (typeof a == 'number') {
+                    return a - b;
+                  } else {
+                    return a < b ? -1 : (a > b ? 1 : 0);
+                  }
+                });
             })
             .reduce(function (output, string) {
                 return output.concat(string);
