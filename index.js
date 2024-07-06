@@ -51,7 +51,7 @@ var generators = {
   4: function (inbox) {
     // Output each pair with the items sorted in reverse order
     return splitGroups(inbox, 2).reduce(function (outbox, pair) {
-      return outbox.concat([pair[1], pair[0]]);
+      return outbox.concat(pair.reverse());
     }, []);
   },
   /*** Coffee Time ***/
@@ -226,13 +226,7 @@ var generators = {
   28: function (inbox) {
     // For each triple, sort then output
     return splitGroups(inbox, 3).reduce(function (outbox, triplet) {
-      return outbox.concat(
-        Number.isInteger(triplet[0])
-          ? triplet.sort(function (a, b) {
-              return a - b;
-            })
-          : triplet.sort()
-      );
+      return outbox.concat(triplet.sort((a, b) => a - b));
     }, []);
   },
   /*** Storage Floor ***/
@@ -350,15 +344,10 @@ var generators = {
     // Split strings, sort items in each string, then output all strings
     return splitStrings(inbox)
       .map(function (string) {
-        // This assumes that the string is uniform in the type of its
-        // elements. Which should be true in any case
-        return string.sort(function (a, b) {
-          if (typeof a == "number") {
-            return a - b;
-          } else {
-            return a < b ? -1 : a > b ? 1 : 0;
-          }
-        });
+        return string
+          .map((n) => parseInt(n, 36))
+          .sort((a, b) => a - b)
+          .map((n) => n.toString(36).toUpperCase());
       })
       .reduce(function (output, string) {
         return output.concat(string);
