@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/atesgoral/hrm-level-outbox-generator.svg?branch=master)](https://travis-ci.org/atesgoral/hrm-level-outbox-generator)
+[![Build and Deploy](https://github.com/atesgoral/hrm-level-outbox-generator/actions/workflows/test.yml/badge.svg)][1]
+
+[1]: https://github.com/atesgoral/hrm-level-outbox-generator/actions/workflows/test.yml
 
 # hrm-level-outbox-generator
 Human Resource Machine inbox generator for testing and benchmarking solutions.
