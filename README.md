@@ -1,6 +1,8 @@
-[![Build and Deploy](https://github.com/atesgoral/hrm-level-outbox-generator/actions/workflows/test.yml/badge.svg)][1]
+[![npm](https://img.shields.io/npm/v/hrm-level-outbox-generator)][1]
+[![Build and Deploy](https://github.com/atesgoral/hrm-level-outbox-generator/actions/workflows/test.yml/badge.svg)][2]
 
-[1]: https://github.com/atesgoral/hrm-level-outbox-generator/actions/workflows/test.yml
+[1]: https://www.npmjs.com/package/hrm-level-outbox-generator
+[2]: https://github.com/atesgoral/hrm-level-outbox-generator/actions/workflows/test.yml
 
 # hrm-level-outbox-generator
 Human Resource Machine inbox generator for testing and benchmarking solutions.
