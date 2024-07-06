@@ -1,6 +1,6 @@
 {
   "name": "hrm-level-outbox-generator",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Human Resource Machine outbox generator for testing and benchmarking solutions",
   "main": "index.js",
   "files": [
